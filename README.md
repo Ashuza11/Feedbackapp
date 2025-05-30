@@ -1,15 +1,16 @@
-Python Feedback App
+# Python Feedback App
+
 Python Flask Feedback app that sends data to Postgres database and emails user
 
 Quick Start
 
-# Add your DATABASE URI in app.py and your mail params in send_mail.py
+## Add your DATABASE URI in app.py and your mail params in send_mail.py
 
-# Install dependencies
+## Install dependencies
 
 pipenv shell
 pipenv install
 
-# Serve on localhost:5000
+## Serve on localhost:5000
 
 python app.py
