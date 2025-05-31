@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request
 from flask_sqlalchemy import SQLAlchemy
+from send_mail import send_email
 
 app = Flask(__name__)
 
@@ -48,7 +49,20 @@ def submit():
         # print(customer, dealer, rating, comments)
         if customer == "" or dealer == "":
             return render_template("index.html", message="please enter required feilds")
-        return render_template("success.html")
+
+        if (
+            db.session.query(Feedback).filter(Feedback.customer == customer).count()
+            == 0
+        ):
+            data = Feedback(customer, dealer, rating, comments)
+            db.session.add(data)
+            db.session.commit()
+            send_email(customer, dealer, rating, comments)
+            return render_template("success.html")
+
+        return render_template(
+            "index.html", message="You have already submitted feeback"
+        )
 
 
 if __name__ == "__main__":
